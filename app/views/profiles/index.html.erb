@@ -1,0 +1,13 @@
+<h1>Profiles</h1>
+<p>Check out your matches</p>
+
+<ul>
+	<% @profile.each do |profile| %>
+		<li> 
+			<%= link_to profile.user_id, profile_path(profile) %>
+			<%= age(profile.birthday) %>
+        	<%= profile.city %>
+			<%= display_photo(profile, :avatar) %>
+		</li>
+	<%end%>
+</ul>

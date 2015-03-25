@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Adventure</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<header>
+		<%=render 'shared/login'%> <%= link_to 'Home', '/' %>
+		| <%= link_to 'New User?', new_user_path %>
+	</header>
+
+	<%= current_user ? "User logged in" : "No user logged in" %>
+
+	<%= flash[:notice] if flash[:notice] %>
+	<%= flash[:alert] if flash[:alert] %>
+	
+<%= yield %>
+
+</body>
+</html>

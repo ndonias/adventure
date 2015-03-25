@@ -1,0 +1,33 @@
+<%= form_for Profile.new do |f| %>
+
+	<form>
+			<%= f.radio_button_tag(:sex, "Male") %>
+			<%= f.label_tag(:sex, "Male") %>
+			<%= f.radio_button_tag(:sex, "Female") %>
+			<%= f.label_tag(:sex, "Female") %>
+
+		    <%= f.label :bio %><br>
+		    <%= f.text_area :bio %><br>
+			
+			<%= f.submit %>  
+		<% end %>
+
+	</form>
+<!-- id                 :integer          not null, primary key
+#  user_id            :string
+#  sexual_orientation :string
+#  weights            :boolean
+#  running            :boolean
+#  biking             :boolean
+#  swimming           :boolean
+#  rocks              :boolean
+#  hiking             :boolean
+#  yoga               :boolean
+#  dance              :boolean
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  latitude           :float
+#  longitude          :float
+#  zip_code           :integer
+#  city               :string
+#  birthday           :date -->
