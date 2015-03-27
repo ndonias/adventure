@@ -1,7 +1,15 @@
 class ProfilesController < ApplicationController
   
   def index
-    @profile = Profile.all
+    @user_filter = current_user.user_filter
+    current_user_pid = current_user.profile.id
+    @profiles = Profile.apply_filters(@user_filter, current_user)
+    .page(params[:page])
+
+    if @profiles.blank?
+      flash.now[:errors] = "There are no more profiles for your action with your current search filters. Please broaden your criteria above and try again. Displaying everyone."
+      @profiles = Profile.page(params[:page])
+    end
   end
 
   def create
@@ -19,6 +27,13 @@ class ProfilesController < ApplicationController
   end
 
   def update
+    @profile = current_user.profile
+
+    if @profile.update_attributes(params[:profile])
+      render :json => @profile
+    else
+      render :json => @profile.errors.full_messages
+    end
   end
 
   def show

@@ -42,6 +42,11 @@ class Profile < ActiveRecord::Base
 	belongs_to :user, inverse_of: :profile, foreign_key: :user_id, dependent: :destroy
 	has_many :photos, inverse_of: :profile, dependent: :destroy
 
+  def self.suggest_six(current_user)
+    profiles = Profile.apply_filters(current_user.user_filter, current_user)
+    profiles.sample(6)
+  end
+
   def self.apply_filters(filter, current_user)
     return Profile.all if filter.nil?
 

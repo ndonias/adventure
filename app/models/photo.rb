@@ -19,9 +19,19 @@ class Photo < ActiveRecord::Base
 
 	has_attached_file :file, default_url: ActionController::Base.helpers.asset_path("img_placeholder.png"), :styles => {:featured => "840x>", :browse => "460x460#", :avatar => "200x200#", :thumb => "60x60#"}
 
-	validates_attachment_content_type :file, :content_type => /\Aimage\/.*\Z/
-
 	belongs_to :profile,
 	inverse_of: :photos
+
+	 include Rails.application.routes.url_helpers
+	 
+	 def to_jq_upload
+	    {
+	      "name" => read_attribute(:file_file_name),
+	      "size" => read_attribute(:file_file_size),
+	      "url" => upload.url(:original),
+	      "delete_url" => upload_path(self),
+	      "delete_type" => "DELETE" 
+	    }
+  	end
 
 end

@@ -1,13 +1,27 @@
+
+
 <h1>Profiles</h1>
 <p>Check out your matches</p>
 
+<%= form_tag user_filters_create_path, method: :post, class: "search-bar" do %>
+    <span class="block-floated">Age Range: </span>
+    <%= text_field_tag :beg_age %>
+    <span class="block-floated">to</span>
+    <%= text_field_tag :end_age %>
+    <span class="block-floated">years old</span>
+    <%= submit_tag "Filter" %>
+<% end %>
+
 <ul>
-	<% @profile.each do |profile| %>
+	<% @profiles.each do |profile| %>
 		<li> 
-			<%= link_to profile.user_id, profile_path(profile) %>
+			<%= link_to profile.user.username, profile_path(profile) %>
 			<%= age(profile.birthday) %>
-        	<%= profile.city %>
-			<%= display_photo(profile, :avatar) %>
+      <%= profile.city %>
+      <div class="index-photo">
+			<%= link_to display_photo(profile, :avatar), profile_path(profile) %>
+      </div>
+      <%= profile.bio %>
 		</li>
 	<%end%>
 </ul>

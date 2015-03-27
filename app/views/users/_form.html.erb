@@ -2,9 +2,10 @@
   <ul>
   <% @user.errors.full_messages.each do |message| %>
     <li><%= message %></li>
-  <% end %>
   </ul>
+  <% end %>
 <% end %>
+
 
 <%= form_for @user do |f| %>
 

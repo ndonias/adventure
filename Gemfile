@@ -4,8 +4,9 @@ gem 'annotate', '~> 2.6.6'
 gem 'paperclip'
 gem 'jquery-fileupload-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-rails'
 gem 'geocoder'
+gem 'kaminari'
+#gem 'protected_attributes'
 gem "therubyracer"
 gem "less-rails" 
 gem "twitter-bootstrap-rails"
@@ -44,6 +45,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'quiet_assets'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

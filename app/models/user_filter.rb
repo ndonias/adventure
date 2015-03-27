@@ -14,7 +14,7 @@
 #
 
 class UserFilter < ActiveRecord::Base
-
+	
 	validates :distance, 
 	numericality: {greater_than: 0}, 
 	allow_nil: true
