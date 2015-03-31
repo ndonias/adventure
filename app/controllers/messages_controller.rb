@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(params[:message])
+    @message = Message.new(message_params)
     other_id = params[:user_id].to_i
     user_id = current_user.id
 
@@ -52,6 +52,10 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def message_params
+    params.require(:message).permit(:body)
+  end
 
   def header_params(user_id, other_id)
     user_header = {

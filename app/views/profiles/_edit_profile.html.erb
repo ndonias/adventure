@@ -3,8 +3,8 @@
   function calculateAge(birthdayString) {
     var birthdate = new Date(birthdayString);
     var cur = new Date();
-    var diff = cur-birthdate; // This is the difference in milliseconds
-    var age = Math.floor(diff/31536000000); // Divide by 1000*60*60*24*365
+    var diff = cur-birthdate; 
+    var age = Math.floor(diff/31536000000);
     return age;
   };
 
@@ -16,7 +16,7 @@
       if ($input.is('textarea') && !$(this).has('.profile-placeholder')) {
         $input.html($(this).html());
       };
-      //regular text input too.
+      
       $profileField.addClass('modifying');
     });
     $('.profile-field').on('blur', '.form-input', function(e) {
@@ -35,9 +35,7 @@
       } else {
         newValue = $input.val();
       };
-      // var newValue = $(this).;
 
-      //if its not a select with text Choose New
       $.ajax({
         url: "<%= profile_url(profile.id) %>",
         type: "PUT",
@@ -47,7 +45,7 @@
           if ($profileText.is('#age')) {
             newValue = calculateAge(r.birthday);
           } else if ($profileText.is('#city')) {
-            newValue = r["city"] //because we change zip.
+            newValue = r["city"] 
           }
           console.log("Profile updated");
           $profileText.html(newValue);

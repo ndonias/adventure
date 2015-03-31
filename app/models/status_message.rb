@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: status_messages
+#
+#  id         :integer          not null, primary key
+#  user_id    :string
+#  category   :string
+#  body       :string
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class StatusMessage < ActiveRecord::Base
   attr_accessible :body, :category, :user_id
   validates :body, presence: true
@@ -5,4 +17,5 @@ class StatusMessage < ActiveRecord::Base
 
   belongs_to :user, inverse_of: :status_messages,
   foreign_key: :user_id
+
 end

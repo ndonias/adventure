@@ -10,18 +10,18 @@
         </div>
 
         <section class="object-content">
-          <a class="username" href="<%= profile_url(notification.triggering_user) %>">
+          <a class="username" href="<%= profile_path(notification.triggering_user) %>">
             <%= notification.triggering_user.username %>
           </a>
 
           <div class="status-body">
             <% if notification.status_type == 0 %>
               has matched with you. <a href="<%=
-              profile_url(notification.triggering_user) %>">
+              profile_path(notification.triggering_user) %>">
               View their profile!</a>
             <% else %>
               has sent you a <a href="
-              <%= conversation_user_messages_url(notification.trigger_id)%>
+              <%= conversation_user_messages_path(notification.trigger_id)%>
               ">message</a>.
             <% end %>
           </div>

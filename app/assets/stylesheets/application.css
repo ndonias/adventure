@@ -16,16 +16,11 @@
  *= require jquery.fileupload-ui
  */
 
-header {
-  background-color: #663399;
-  /* #663399 */
-  border-bottom: 1px solid black;
-}
 body {
   font-size: 16px;
   background-color: #333;
   font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
-  color: #666666;
+  color: #666666 ;
   line-height: 1.4;
   font-weight: "Light", "Helvetica Neue", "Helvetica", sans-serif;
 }
@@ -390,3 +385,4 @@ ul.profiles-list  a {
   line-height: 1.2 em;
   font-weight: bold;
   color: #FF6633;
+}

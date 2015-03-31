@@ -6,15 +6,13 @@
     </div>
 
     <section class="object-content">
-        <label>
-          <textarea name="message[body]"
-            placeholder="Write something!"></textarea>
-        </label>
+        <%= text_field_tag :body %>
     </section>
   </li>
 
-  <input type="submit" value="Send Message">
+ <%= submit_tag "Send" %>
 </form>
+<% end %>
 
 
 

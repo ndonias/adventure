@@ -17,8 +17,6 @@
   </ul>
 </section>
 
-  </section>
-
   <% if current_user.profile == @profile %>
 
   <script type="text/template" id="image-file-input-wrapper">
@@ -79,10 +77,7 @@ $(document).ready(function() {
   });
 
   $('.featured-photo').on('click','remove', function() {
-    //send UJS request to delete.
-    //on success, summon new pic wrapper with nothin
-    //replace the HTML of featured-photo
-    //empty true  so doesnt display x button
+    
     var newPhotoWrap = picTemplateFn({opts:
                                   {empty: true,
                                    src: '<%=asset_path "img_placeholder.png" %>'}
@@ -92,11 +87,10 @@ $(document).ready(function() {
 
   <% thumbnails = @profile.photos[1..-1] %>
 
-  <% thumbnails && thumbnails.each do |photo| %> // img_placeholder
-    //install a template for each of these photos.
+  <% thumbnails && thumbnails.each do |photo| %> 
     $('ul.thumbnails').append(picTemplateFn({opts:
                                           {src: '<%= photo.file.url %>',
-                                           errors: <%= @photo.invalid? %>}
+                                           errors: <%= photo.invalid? %>}
                                         }));
 
   <% end %>
@@ -104,7 +98,7 @@ $(document).ready(function() {
   <% if current_user.profile.id == @profile.id %>
 
     var newPhotoWrap = picTemplateFn({opts:
-                                  {empty: true, // so doesnt display x button
+                                  {empty: true,
                                    src: '<%=asset_path "img_placeholder.png" %>'}
                                 });
     $('ul.thumbnails').append(newPhotoWrap);
@@ -120,25 +114,50 @@ $(document).ready(function() {
     e.preventDefault();
 
     $(this).parents('li').remove();
-    //need to remove it from ACTUAL AJAX first before doing this.
   });
+
+function uploadPhoto(photoData, $fileInput) {
+    $.ajax({
+      method: 'POST',
+      enctype: 'multipart/form-data', //important!
+      url: "<%= photos_path %>",
+      data: {photo_data: photoData},
+      xhr: function () {
+        var xhr = new window.XMLHttpRequest();
+        xhr.upload.onprogress = progressHandler.bind($fileInput);
+        return xhr;
+      },
+      beforeSend: function() {
+      },
+      success: function(data) {
+      },
+
+      error: function(xhr) {
+        $fileInput.parent().addClass('errors');
+      },
+
+      complete: function () {
+        $bar = $fileInput.siblings('.progress')
+        liftProgressVeil($bar, 100, 500, function() {
+          $fileInput.removeAttr('name');
+          $fileInput.parent().removeClass('busy');
+        });
+      }
+    });
+  };
 
  function readUrl(input) {
     if (input.files && input.files[0]) {
       var file = input.files[0];
       var $fileInput = $(input);
 
-      //do it clientside to not waste time.
       if (validateSize(file) && validateType(file)) {
-        //just in case it's there
         $fileInput.parent().removeClass('errors');
         $fileInput.parent().addClass('busy');
         $fileInput.siblings('.progress').html('0%');
-        //to set the background begin animation?
         $fileInput.siblings('.remove').show();
 
         var reader = new FileReader();
-        //callback for after
         reader.onload = function(e) {
           var photoData = e.target.result;
 
@@ -172,7 +191,6 @@ $(document).ready(function() {
   };
   
   function progressHandler(e) {
-    // Bound to fileInput
     if (e.lengthComputable) {
       var percentComplete = Math.round(e.loaded / e.total * 92);
       var $bar = this.siblings('.progress');

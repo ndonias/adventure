@@ -1,28 +1,8 @@
-<% if @photos.blank? %>
-
-<% end %>
-
-<%##################################################%>
-<%##################################################%>
-<%##################################################%>
-<%##################################################%>
-
-
-
-
-
-
-<%##################################################%>
-<%##################################################%>
-<%##################################################%>
-
-
 <style>
 
 section.photos {
   display: block;
-  width: 400px; /* change later */
-  border: 6px solid gold;
+  width: 400px;
   float: left;
 
 }
@@ -30,7 +10,6 @@ section.photos {
 section.photos > div.featured-photo {
   width: 380px;
   padding: 10px;
-  border-bottom: 1px solid gold;
 }
 
 .featured-photo > img {
@@ -53,7 +32,6 @@ ul.thumbnails > li {
   height: 50px;
 }
 
-/* images just expand to container */
 ul.thumbnails > li > img {
   width: 100%;
   height: 100%;
@@ -64,7 +42,6 @@ div.image-file-input-wrapper {
   height: auto;
   position: relative;
 
-  /*sandwiched between every image. id probably have this just turn on with current_user*/
 }
 
 div.image-file-input-wrapper > img {
@@ -77,7 +54,7 @@ ul.thumbnails div.image-file-input-wrapper > img {
   height: 50px;
 }
 
-div.image-file-input-wrapper > input[type="file"] { /* its clear */
+div.image-file-input-wrapper > input[type="file"] {
   position: absolute;
   display: block;
   width: 100%;
@@ -91,7 +68,7 @@ div.image-file-input-wrapper > input[type="file"]:hover {
  cursor: pointer;
 }
 
-div.image-file-input-wrapper .remove { /** this ist he square to remove. if its not there, then we do display: none in-line */
+div.image-file-input-wrapper .remove { 
   position: absolute;
   display: block;
   width: 10px;
@@ -102,7 +79,7 @@ div.image-file-input-wrapper .remove { /** this ist he square to remove. if its 
   z-index: 5;
 }
 
-div.image-file-input-wrapper > .progress { /* hidden at first until .busy (uploading) */
+div.image-file-input-wrapper > .progress { 
 
   position: absolute;
   width: 100%;
@@ -143,7 +120,7 @@ ul.thumbnails .progress {
 .featured-photo .progress {
   font-size: 30px;
   line-height: 300px;
-  } /* this is for the progress texts */
+  } 
 
   div.image-file-input-wrapper > .errors {
     list-style: square;
@@ -186,64 +163,20 @@ ul.thumbnails .progress {
     display: block;
   }
 
-
-
 </style>
 
-<%##################################################%>
-<%##################################################%>
 <div class="content-3of7">
   <section class="photos">
-    <div class="featured-photo">
-
-    </div>
-
-
-    <ul class="thumbnails">
-
-    </ul>
-
+    <div class="featured-photo"> </div>
+    <ul class="thumbnails"> </ul>
   </section>
-
-
-
-
-
-
 </div>
 
-
-<script type="text/template" id="image-file-input-wrapper">
-  <%% var timeStampID = new Date().getTime().toString() %>
-  <%%= (!opts.main) ? '<li>' : '' %>
-    <div class="image-file-input-wrapper <%%= (opts.errors) ? 'errors' : '' %>">
-      <img class="profile-pic" src="<%%= opts.src %>">
-      <input class="photo_file" type="file" name="photos[<%%= timeStampID %>][file]">
-
-      <span style="<%%= (opts.empty) ? 'display:none;' : ''  %>"
-            class="remove">
-      </span>
-      <span class="progress"></span>
-      <span class="errors">
-        <div class="triangle"></div>
-        <span class="remove"></span>
-        <p class="message">
-          Please select another file. This one will not be uploaded.
-        </p>
-      </span>
-    </div>
-    <%%= (!opts.main) ? '</li>' : '' %>
-</script>
-
-<!-- major props to tduek -->
 <script>
+
 $(document).ready(function() {
   var picTemplateFn = _.template($('#image-file-input-wrapper').html());
-  //call using @profile.photos!!!!!
-    //call using @profile.photos!!!!!
-      //call using @profile.photos!!!!!
-        //call using @profile.photos!!!!!
-  //get the template made.
+  
   $('.featured-photo').html(
 
     <% if @profile.photos[0] %>
@@ -260,9 +193,7 @@ $(document).ready(function() {
                        src:    '<%= asset_path "img_placeholder.png" %>'}
                     })
     <% end %>
-    //put shit into featured-photo. the big slot.
-    //if theres nothing there, put the blank wrapper!
-  ); // img_placeholder
+  );
 
 
   $('.featured-photo').on('change','input.photo_file', function() {
@@ -270,10 +201,7 @@ $(document).ready(function() {
   });
 
   $('.featured-photo').on('click','remove', function() {
-    //send UJS request to delete.
-    //on success, summon new pic wrapper with nothin
-    //replace the HTML of featured-photo
-    //empty true  so doesnt display x button
+    
     var newPhotoWrap = picTemplateFn({opts:
                                   {empty: true,
                                    src: '<%=asset_path "img_placeholder.png" %>'}
@@ -281,12 +209,9 @@ $(document).ready(function() {
     $('div.featured-photo').html(newPhotoWrap);
   });
 
-  //get rest of photos.
-
   <% thumbnails = @profile.photos[1..-1] %>
 
-  <% thumbnails && thumbnails.each do |photo| %> // img_placeholder
-    //install a template for each of these photos.
+  <% thumbnails && thumbnails.each do |photo| %> 
     $('ul.thumbnails').append(picTemplateFn({opts:
                                           {src: '<%= photo.file.url %>',
                                            errors: <%= photo.invalid? %>}
@@ -307,42 +232,9 @@ $(document).ready(function() {
 
   $('ul.thumbnails').on('click','span.remove', function() {
     $(this).parents('li').remove();
-    //need to remove it from ACTUAL AJAX first before doing this.
   });
 
-  function readUrl(input) {
-    if (input.files && input.files[0]) {
-      var file = input.files[0];
-      var $fileInput = $(input);
-
-      if (validateSize(file) && validateType(file)) {
-        $fileInput.parent().removeClass('errors');
-        $fileInput.parent().addClass('busy');
-        $fileInput.siblings('.progress').html('0%');
-        //to set the background begin animation?
-        $fileInput.siblings('.remove').show();
-
-        var reader = new FileReader();
-        //callback for after
-        reader.onload = function(e) {
-          var photoData = e.target.result;
-
-          uploadPhoto(photoData, $fileInput);
-          $(input).siblings('img.profile-pic').attr('src',photoData);
-        };
-
-        reader.onerror = function(e) {
-          $fileInput.parent().addClass('errors');
-          var msg = "Unable to upload image. Try again.";
-          $fileInput.siblings('.errors').find('.message').html(msg);
-        };
-
-        reader.readAsDataURL(input.files[0]);
-      } else {
-      $fileInput.parent().addClass('errors');
-      }
-    }
-  };
+  
 
   function validateSize(file) {
     if (file.size / (1024 * 1024) < 6) {
@@ -368,19 +260,16 @@ $(document).ready(function() {
         return xhr;
       },
       beforeSend: function() {
-        // Set spinner. Now handled in #readUrl with .progress.
       },
       success: function(data) {
-        // $fileInput.siblings('input.pic_token').val(data['token']);
-        // i need to do something else.
-        //because he's just going to save it! but i dont need that.
       },
+
       error: function(xhr) {
         $fileInput.parent().addClass('errors');
       },
+
       complete: function () {
         $bar = $fileInput.siblings('.progress')
-        //check this out later.
         liftProgressVeil($bar, 100, 500, function() {
           $fileInput.removeAttr('name');
           $fileInput.parent().removeClass('busy');
@@ -389,8 +278,39 @@ $(document).ready(function() {
     });
   };
 
+  function readUrl(input) {
+    if (input.files && input.files[0]) {
+      var file = input.files[0];
+      var $fileInput = $(input);
+
+      if (validateSize(file) && validateType(file)) {
+        $fileInput.parent().removeClass('errors');
+        $fileInput.parent().addClass('busy');
+        $fileInput.siblings('.progress').html('0%');
+        $fileInput.siblings('.remove').show();
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var photoData = e.target.result;
+
+          uploadPhoto(photoData, $fileInput);
+          $(input).siblings('img.profile-pic').attr('src',photoData);
+        };
+
+        reader.onerror = function(e) {
+          $fileInput.parent().addClass('errors');
+          var msg = "Unable to upload image. Try again.";
+          $fileInput.siblings('.errors').find('.message').html(msg);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      } else {
+      $fileInput.parent().addClass('errors');
+      }
+    }
+  };
+
   function progressHandler(e) {
-    // Bound to fileInput
     if (e.lengthComputable) {
       var percentComplete = Math.round(e.loaded / e.total * 92);
       var $bar = this.siblings('.progress');
@@ -416,7 +336,6 @@ $(document).ready(function() {
    };
 
 });
-
 
 </script>
 
