@@ -1,3 +1,21 @@
+# profile photos
+
+<% if current_user.profile == @profile && @profile.photos.blank? %>
+<%=image_tag 'img_placeholder.png' %>
+  
+  <div class="flash">
+    Uploading photos increase your chance of success.
+  </div>
+
+<% end %>
+
+# for show
+<h1 class="username">
+    <%= @profile.user.username %>,  
+    <%= age(@profile.birthday) %> </h1>
+      <%= render partial: "profile_photos", locals: {profile: @profile} %>
+    <h3><%= @profile.bio %></h3>
+
 
 # For Profile
 

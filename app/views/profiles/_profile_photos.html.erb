@@ -1,11 +1,203 @@
-<% if current_user.profile == @profile && @profile.photos.blank? %>
-<%=image_tag 'img_placeholder.png' %>
+<section class = "photos">
+	<div class="featured-photo">
+    <% unless current_user.profile == @profile %>
+		  <% if  !@profile.photos.blank? %>
+      <img src = "<%= @profile.photos.sample.file.url(:featured) %>" >
+		<% else %>
+      <%=image_tag 'img_placeholder.png' %>
+		   <% end %>
+    <% end %>
+  	</div>
+    <ul class="thumbnails">
+    <% if current_user.profile == @profile && @profile.photos.blank? %>
+      <div class="flash">
+        Uploading photos increase your chance of success.
+      </div>
+    <% end %>
+  </ul>
+</section>
+
+  </section>
+
+  <% if current_user.profile == @profile %>
+
+  <script type="text/template" id="image-file-input-wrapper">
+
+  <%% var timeStampID = new Date().getTime().toString() %>
+  <%%= (!opts.main) ? '<li>' : '' %>
+    <div class="image-file-input-wrapper <%%= (opts.errors) ? 'errors' : '' %>">
+
+      <img class="profile-pic" src="<%%= opts.src %>">
+
+      <% if current_user.profile.id == @profile.id %>
+
+      <input class="photo_file" type="file" name="photos[<%%= timeStampID %>][file]">
+
+      <span style="<%%= (opts.empty) ? 'display:none;' : ''  %>"
+              class="remove">
+        </span>
+        <span class="progress"></span>
+        <span class="errors">
+          <div class="triangle"></div>
+          <span class="remove"></span>
+          <p class="message">
+            Please select another file. This one will not be uploaded.
+          </p>
+        </span>
+
+
+      <% end %>
+
+    </div> 
+
+        <%%= (!opts.main) ? '</li>' : '' %>
+</script>
+
+<script>
+$(document).ready(function() {
+  var picTemplateFn = _.template($('#image-file-input-wrapper').html());
+  $('.featured-photo').html(
+
+    <% if @profile.photos[0] %>
+		picTemplateFn({opts:
+                      {src: '<%= @profile.photos[0].file.url %>',
+                       main: true,
+                       errors: <%= @profile.photos[0].invalid? %>,
+                       }
+                    })
+    <% else %>
+      picTemplateFn({opts:
+                      {empty:  true,
+                       main:   true,
+                       src:    '<%= asset_path "img_placeholder.png" %>'}
+                    })
+    <% end %>
+  );
+
+  $('.featured-photo').on('change','input.photo_file', function() {
+    readUrl(this);
+  });
+
+  $('.featured-photo').on('click','remove', function() {
+    //send UJS request to delete.
+    //on success, summon new pic wrapper with nothin
+    //replace the HTML of featured-photo
+    //empty true  so doesnt display x button
+    var newPhotoWrap = picTemplateFn({opts:
+                                  {empty: true,
+                                   src: '<%=asset_path "img_placeholder.png" %>'}
+                                });
+    $('div.featured-photo').html(newPhotoWrap);
+  });
+
+  <% thumbnails = @profile.photos[1..-1] %>
+
+  <% thumbnails && thumbnails.each do |photo| %> // img_placeholder
+    //install a template for each of these photos.
+    $('ul.thumbnails').append(picTemplateFn({opts:
+                                          {src: '<%= photo.file.url %>',
+                                           errors: <%= @photo.invalid? %>}
+                                        }));
+
+  <% end %>
+
+  <% if current_user.profile.id == @profile.id %>
+
+    var newPhotoWrap = picTemplateFn({opts:
+                                  {empty: true, // so doesnt display x button
+                                   src: '<%=asset_path "img_placeholder.png" %>'}
+                                });
+    $('ul.thumbnails').append(newPhotoWrap);
+
+  <% end %>
+
+  $('ul.thumbnails').on('change', 'input.photo_file', function(e) {
+    readUrl(this);
+    setUploadIcon();
+  });
+
+  $('ul.thumbnails').on('click','span.remove', function(e) {
+    e.preventDefault();
+
+    $(this).parents('li').remove();
+    //need to remove it from ACTUAL AJAX first before doing this.
+  });
+
+ function readUrl(input) {
+    if (input.files && input.files[0]) {
+      var file = input.files[0];
+      var $fileInput = $(input);
+
+      //do it clientside to not waste time.
+      if (validateSize(file) && validateType(file)) {
+        //just in case it's there
+        $fileInput.parent().removeClass('errors');
+        $fileInput.parent().addClass('busy');
+        $fileInput.siblings('.progress').html('0%');
+        //to set the background begin animation?
+        $fileInput.siblings('.remove').show();
+
+        var reader = new FileReader();
+        //callback for after
+        reader.onload = function(e) {
+          var photoData = e.target.result;
+
+          uploadPhoto(photoData, $fileInput);
+          $(input).siblings('img.profile-pic').attr('src',photoData);
+        };
+
+        reader.onerror = function(e) {
+          $fileInput.parent().addClass('errors');
+          var msg = "Unable to upload image. Try again.";
+          $fileInput.siblings('.errors').find('.message').html(msg);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      } else {
+      $fileInput.parent().addClass('errors');
+      }
+    }
+  };
+
+  function validateSize(file) {
+    if (file.size / (1024 * 1024) < 6) {
+      return true;
+    }
+  };
+
+  function validateType(file) {
+    if (/jpg|jpeg|png|bmp/.exec(file.type)) {
+      return true;
+    }
+  };
   
-  <div class="flash">
-    Uploading photos increase your chance of success.
-  </div>
+  function progressHandler(e) {
+    // Bound to fileInput
+    if (e.lengthComputable) {
+      var percentComplete = Math.round(e.loaded / e.total * 92);
+      var $bar = this.siblings('.progress');
+      liftProgressVeil($bar, percentComplete, 100);
+    }
+  };
+
+  function liftProgressVeil ($bar, percent, duration, cb) {
+    $bar.html('' + percent + '%' );
+    var height = '' + (100 - percent) + '%';
+    var opacity = percent/100;
+    $bar.animate({width: height}, {duration: duration, complete: cb});
+  };
+
+  function setUploadIcon() {
+    var lastFileInputVal = $('input.photo_file').last().val();
+    if (lastFileInputVal.length > 0 || lastSrcInputVal.length > 0) {
+      var picWrap = picTemplateFn({opts:
+                                    {empty: true,
+                                     src: '<%=asset_path "img_placeholder.png"%>'}
+                                  });
+      $('ul.thumbnails').append(picWrap);
+     }
+   };
+});
+</script>
 
 <% end %>
-
-
-

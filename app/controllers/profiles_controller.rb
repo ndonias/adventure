@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
 
   def create
     @user = User.find(session[:user_id])
-    @user.build_profile(params.require(:profile).permit(:bio, :sex, :birthday, :city, :zip_code))
+    @user.build_profile(params.require(:profile).permit(:bio, :sex, :birthday, :city, :zip_code, photos_attributes:[:file, :profile_id]))
     if @user.profile.save
       redirect_to profile_path(@user.profile)
     else

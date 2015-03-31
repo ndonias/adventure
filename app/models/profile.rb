@@ -41,6 +41,7 @@ class Profile < ActiveRecord::Base
 
 	belongs_to :user, inverse_of: :profile, foreign_key: :user_id, dependent: :destroy
 	has_many :photos, inverse_of: :profile, dependent: :destroy
+  accepts_nested_attributes_for :photos
 
   def self.suggest_six(current_user)
     profiles = Profile.apply_filters(current_user.user_filter, current_user)

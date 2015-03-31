@@ -21,7 +21,7 @@ ul {
 }
 
 header {
-  background-color: #CCCCCC;
+  background-color: #778899;
   border-bottom: 1px solid black;
 }
 
@@ -44,7 +44,7 @@ header > .header-wrap {
 }
 
 .header-logo > a:hover {
-  background: black;
+  color: #B0C4DE;
 }
 
 .header-nav {
@@ -63,7 +63,7 @@ header > .header-wrap {
 }
 
 .header-nav > ul > li > a:hover {
-  color: yellow;
+  color: #B0C4DE;
 }
 
 ul.profiles-list {

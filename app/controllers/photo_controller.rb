@@ -10,28 +10,30 @@ class PhotoController < ApplicationController
   end
 
   def create
-  	ext = params[:photo_data][11..14][/jpeg|jpg|png/]
+    ext = params[:photo_data][11..14][/jpeg|jpg|png/]
     file = Tempfile.new(["pic", ".#{ext}"])
 
-    @photo = Photo.new(file: file)
+    raw_data = params[:photo_data]["data:image/#{ext};base64,".length..-1]
+    file.binmode
+    file.write(Base64.decode64(raw_data))
+
+    @photo = Photo.new(photo_params)
     @photo.profile_id = current_user.profile.id
 
-    respond_to do |format|
-
     if @photo.save
-        format.html {
-          render :json => [@photo.to_jq_upload].to_json,
-          :content_type => 'text/html',
-          :layout => false
-        }
-        format.json { render json: {files: [@photo.to_jq_upload]}, status: :created, location: @photo }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
+      render json: @photo
+    else
+      render json: @photo.errors.full_messages, status: 422
+    end
   end
 
   def destroy
+  end
+
+  private
+
+  def photo_params
+    params.require(:photo).permit(:file file, :profile_id)
   end
   
 end

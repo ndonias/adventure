@@ -1,9 +1,16 @@
 <div class="header-wrap group">
   <h1 class="header-logo">
+        <% if logged_in? %>
     <a href="<%= profiles_path %>">
       Adventure
     </a>
+  <%else%>
+    <a href="<%= root_path %>">
+      Adventure
+    </a>
+      <% end %>
   </h1>
+
 
   <nav class="header-nav">
     <ul class="group">
@@ -29,7 +36,7 @@
         </li> -->
 
         <li>
-          <%= link_to "Log Out", session_url, method: :delete %>
+            <%= link_to 'sign out', logout_path, method: :delete %>
         </li>
       <% else %>
         <li>

@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'user_filters/create'
-
   root 'welcome#index'
-  resources :users
-
-  resources :photos, only: [:new, :create, :destroy]
+  resources :users, except: [:index, :show, :edit]
 
   resources :profiles
+  resources :photos, only: [:new, :create, :destroy]
+
   resource :user_filter, only: [:update]
   resource :session, only: [:new, :create, :destroy]
 

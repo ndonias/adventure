@@ -5,6 +5,7 @@ gem 'paperclip'
 gem 'jquery-fileupload-rails'
 gem 'jquery-ui-rails'
 gem 'geocoder'
+gem 'underscore-rails'
 gem 'kaminari'
 #gem 'protected_attributes'
 gem "therubyracer"

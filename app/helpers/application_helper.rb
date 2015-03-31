@@ -4,7 +4,7 @@ module ApplicationHelper
   		session[:user_id] ? User.find(session[:user_id]) : nil
     end
 
-    def display_photo(profile, type)
+  def display_photo(profile, type)
     url = if profile && profile.photos.exists?
             profile.photos.first.file.url(:avatar)
           else
