@@ -12,7 +12,9 @@
 
 <div class="content-2of7">
   <div class="update-status-message">
-    <form action="<%= status_messages_url %>" method="post" data-remote="true" id="post-status-form">
+    
+    <%= form_tag status_messages_path, method: :post, remote: true, id: "post-status-form"%>
+
       <textarea placeholder="Say hi to the world!" class="group" name="status_message[body]"></textarea>
 
       <input type="submit" value="I want to scream and shout!">

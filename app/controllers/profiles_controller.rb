@@ -1,7 +1,6 @@
 class ProfilesController < ApplicationController
   
   def index
-    @profile = Profile.all
     @user_filter = current_user.user_filter
     current_user_pid = current_user.profile.id
     @profiles = Profile.apply_filters(@user_filter, current_user)

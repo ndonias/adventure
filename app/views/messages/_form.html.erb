@@ -1,5 +1,4 @@
-<form action="<%= user_messages_url(user_id) %>"
-  class="create-pm" method="post" data-remote="true">
+<%= form_tag user_messages_path, method: :post do, remote: true %>
 
   <li class="object-item group">
     <div class="object-avatar">
@@ -7,7 +6,6 @@
     </div>
 
     <section class="object-content">
-      <%= auth_token_input %>
         <label>
           <textarea name="message[body]"
             placeholder="Write something!"></textarea>

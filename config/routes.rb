@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root 'welcome#index'
-  resources :users, except: [:index, :show, :edit] do
+  resources :users do
     resources :messages, only: [:new, :create] do
       get 'conversation', on: :collection
     end
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :status_messages, only: [:index, :create, :delete, :new]
 
 
-  resources :profiles, except: [:new] do
+  resources :profiles do
     get "random", on: :collection
   end
 
@@ -27,7 +27,6 @@ Rails.application.routes.draw do
   resources :photos, only: [:new, :create, :destroy]
 
   resource :user_filter, only: [:update]
-  resource :session, only: [:new, :create, :destroy]
 
   post '/signin', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

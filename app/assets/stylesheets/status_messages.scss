@@ -1,3 +1,51 @@
 // Place all the styles related to the status_messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul, li {
+  list-style: none;
+}
+
+.username {
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.update-status-message {
+  background-color: #FFF;
+  margin-bottom: 24px;
+}
+
+.update-status-message > textarea {
+  float: left;
+  height: 90px;
+  width: 300px;
+  padding: 5px;
+}
+
+.update-status-message > input[type=submit] {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.update-status {
+  border: 0;
+  height: 25px;
+  font: inherit;
+  border-bottom: 1px solid grey;
+}
+
+.object-content > .status-body {
+  display: block;
+  margin-top: 25px;
+  font-size: 16px;
+  border-bottom: 2px dotted lightgrey;
+}
+
+.object-content > .status-timestamp {
+  font-size: 14px;
+  font-style: italic;
+  display: inline-block;
+  color: #ccced3;
+}

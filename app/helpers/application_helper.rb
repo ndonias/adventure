@@ -2,7 +2,7 @@ module ApplicationHelper
 
 	def current_user
   		session[:user_id] ? User.find(session[:user_id]) : nil
-    end
+  end
 
   def display_photo(profile, type)
     url = if profile && profile.photos.exists?

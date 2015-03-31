@@ -45,7 +45,7 @@ img.profile-avatar {
 .main-profile-container {
   width: 538px;
   margin-top: 45px;
-  padding: 30px 20px 20px 20px;
+  padding: 40px 40px 40px 40px;
   float: left;
   background: rgba(255, 255, 255, .8);
 }
@@ -57,15 +57,16 @@ img.profile-avatar {
 
 section.photos {
   display: block;
+  width: 100%;
   float: left;
 }
 
 section.photos > div.featured-photo {
-	width: auto;
+  width: 100%;
 }
 
 .featured-photo > img {
-  width: auto;
+  width: 100%;
   height: auto;
   display: block;
 }
