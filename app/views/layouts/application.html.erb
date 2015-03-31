@@ -21,7 +21,6 @@
       </div>
     </header>
     <% end %>
-    <%= current_user ? "User logged in" : "No user logged in" %>
     <content>
       <% if flash[:errors] || flash[:success] %>
         <div class="flash sig-message">

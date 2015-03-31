@@ -27,21 +27,36 @@
 <h1 class="username">
     <%= @profile.user.username %>,  
     <%= age(@profile.birthday) %> </h1>
-
+    <h5> City: <%= @profile.city %> </h5>
     <h3><%= @profile.bio %></h3>
+    <br>
+    <br>
+    <h4>My Activities</h4>
+    <ul>
+      <li>Weights: <%=@profile.weights%></li>
+      <li>Running: <%=@profile.running%></li>
+      <li>Biking: <%=@profile.biking%></li>
+      <li>Swimming: <%=@profile.swimming%></li>
+      <li>Hiking: <%=@profile.hiking%></li>
+      <li>Yoga: <%=@profile.yoga%></li>
+      <li>Dance: <%=@profile.dance%></li>
+    </ul>
 </div>
 
 <script type="text/template" id="send-message-template"/>
-  <div class="hide-container">
-    <form class="send-message"
-      action="<%= user_messages_path(@profile.user.id) %>"
-      method="post" data-remote="true">
+    <div class="hide-container">
+      <p>Send over a message</p>
+      
+      <%= form_for(@message, url: user_messages_path(@profile.user), method: :post, remote: true, class: "send-message") do |f| %>
 
-      <textarea name="message[body]" style="color: black"
-        placeholder="Type some stuff here">
-      </textarea>
+        <%= f.text_area :body %>
 
-      <input type="submit" class="submit-message" value="Submit">
-    </form>
+        <%= f.submit "Submit", class: "sumbit-message" %>
+
+        <% end %>
     </div>
-</script>
+  </script>
+</div>
+
+
+

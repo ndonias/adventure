@@ -3,11 +3,11 @@
     <% if display_type == 1 %>
       <% profile = User.find(message.recipient_id).profile %>
       <a href="<%= conversation_user_messages_path(message.recipient_id) %>"><%= display_photo(profile, :avatar) %></a>
-    <% else %> <%# In conversation %>
+    <% else %> 
       <% if message.is_sent? %>
         <%= display_photo(current_user.profile, :avatar) %>
       <% else %>
-        <a href="<%= profile_url(profile) %>"><%= display_photo(profile, :avatar) %></a>
+        <a href="<%= profile_path(profile) %>"><%= display_photo(profile, :avatar) %></a>
       <% end %>
     <% end %>
   </div>
@@ -15,7 +15,7 @@
   <section class="object-content">
     <% if display_type == 1 %>
       <a class="username" href="<%= conversation_user_messages_path(message.recipient_id) %>"><%= message.recipient_username %></a>
-    <% else %> <%# In conversation %>
+    <% else %> 
       <% author = message.is_sent? ? current_user.username : @other_username %>
           <%= author %>
     <% end %>

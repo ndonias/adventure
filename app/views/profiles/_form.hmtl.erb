@@ -8,6 +8,37 @@
 
 		    <%= f.label :bio %><br>
 		    <%= f.text_area :bio %><br>
+
+			<%= f.hidden_field :weights %>
+			<%= f.check_box :weights, checked: false %> Weight Lifting 
+
+			<%= f.hidden_field :running %>
+			<%= f.check_box :running, checked: false, value: true %>
+			<%= f.label :running, 'Running' %>
+			
+			<%= f.hidden_field :biking %>
+			<%= f.check_box :biking, checked: false %>
+			<%= f.label :biking, 'Biking' %> <br>
+
+			<%= f.hidden_field :swimming %>
+			<%= f.check_box :swimming, checked: false %>
+			<%= f.label :swimming, 'Swimming' %>
+
+			<%= f.hidden_field :rocks %>
+			<%= f.check_box :rocks, checked: false %>
+			<%= f.label :rocks, 'Rock Climbing' %>
+
+			<%= f.hidden_field :hiking %>
+			<%= f.check_box :hiking, checked: false %> <br>
+			<%= f.label :hiking, 'Hiking' %>
+
+			<%= f.hidden_field :yoga %>
+			<%= f.check_box :yoga, checked: false %>
+			<%= f.label :yoga, 'Yoga' %>
+
+			<%= f.hidden_field :dance %>
+			<%= f.check_box :dance, checked: false %>
+			<%= f.label :dance, 'Dancing' %>
 			
 			<%= f.submit %>  
 		<% end %>

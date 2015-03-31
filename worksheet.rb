@@ -1,3 +1,15 @@
+# 
+      <p>Write message here</p>
+        <%= form_tag(user_messages_path(@profile.user.id), method: :post, remote:true) do %>
+
+        <%= text_field_tag :body %>
+
+        <%= submit_tag "Submit" %>
+      </form>
+    </div>
+      <% end %>
+
+
 # profile photos
 
 <% if current_user.profile == @profile && @profile.photos.blank? %>

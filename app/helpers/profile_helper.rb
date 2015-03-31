@@ -12,4 +12,8 @@ module ProfileHelper
       "-"
     end
   end
+
+  def display_match()
+  end
+
 end
