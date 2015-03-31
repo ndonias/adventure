@@ -1,0 +1,44 @@
+<div class="content-4of7">
+  <% if @status_messages.blank? %>
+    <div class="flash">
+      There are no status messages to display.
+    </div>
+  <% end %>
+
+  <ul class="objects-list" id="status-msg-list">
+    <%= render partial: "status_message", collection: @status_messages%>
+  </ul>
+</div>
+
+<div class="content-2of7">
+  <div class="update-status-message">
+    <form action="<%= status_messages_url %>" method="post" data-remote="true" id="post-status-form">
+      <textarea placeholder="Say hi to the world!" class="group" name="status_message[body]"></textarea>
+
+      <input type="submit" value="I want to scream and shout!">
+    </form>
+  </div>
+
+  <%= render partial: "shared/suggested_users" %>
+</div>
+
+<script type="text/template" id="new-status-wrapper">
+  <li class="object-item group">
+    <div class="object-avatar">
+      <%= display_photo(current_user.profile, :avatar) %>
+    </div>
+    <section class="object-content">
+      <a class="username" href="#">
+        <%= current_user.username %>
+      </a>
+
+      <div class="status-body">
+        <%%= status.body %>
+      </div>
+
+      <div class="status-timestamp">
+        Now
+      </div>
+    </section>
+  </li>
+</script>

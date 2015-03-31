@@ -11,7 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330194915) do
+ActiveRecord::Schema.define(version: 20150331033500) do
+
+  create_table "message_headers", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "other_id"
+    t.string   "message_id"
+    t.boolean  "is_sent"
+    t.boolean  "is_read",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_headers", ["message_id"], name: "index_message_headers_on_message_id"
+  add_index "message_headers", ["other_id"], name: "index_message_headers_on_other_id"
+  add_index "message_headers", ["user_id"], name: "index_message_headers_on_user_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "receiver_id"
+    t.string   "trigger_id"
+    t.string   "status_type"
+    t.boolean  "is_read"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "photos", force: :cascade do |t|
     t.integer  "profile_id"
@@ -46,6 +75,14 @@ ActiveRecord::Schema.define(version: 20150330194915) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "status_messages", force: :cascade do |t|
+    t.string   "user_id"
+    t.string   "category"
+    t.string   "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_filters", force: :cascade do |t|
     t.integer  "user_id"

@@ -1,5 +1,9 @@
+<div class="content-half left-half" style="padding-top: 0 px">
+
+
 <h1 class="username">
     <%= @profile.user.username %>,  
     <%= age(@profile.birthday) %> </h1>
       <%= render partial: "profile_photos", locals: {profile: @profile} %>
     <h3><%= @profile.bio %></h3>
+</div>

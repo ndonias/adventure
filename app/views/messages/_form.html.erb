@@ -1,0 +1,22 @@
+<form action="<%= user_messages_url(user_id) %>"
+  class="create-pm" method="post" data-remote="true">
+
+  <li class="object-item group">
+    <div class="object-avatar">
+      <%= display_photo(current_user.profile, :avatar) %>
+    </div>
+
+    <section class="object-content">
+      <%= auth_token_input %>
+        <label>
+          <textarea name="message[body]"
+            placeholder="Write something!"></textarea>
+        </label>
+    </section>
+  </li>
+
+  <input type="submit" value="Send Message">
+</form>
+
+
+

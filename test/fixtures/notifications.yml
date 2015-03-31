@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receiver_id: MyString
+  trigger_id: MyString
+  status_type: MyString
+  is_read: false
+
+two:
+  receiver_id: MyString
+  trigger_id: MyString
+  status_type: MyString
+  is_read: false

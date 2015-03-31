@@ -17,7 +17,7 @@ class PhotoController < ApplicationController
     file.binmode
     file.write(Base64.decode64(raw_data))
 
-    @photo = Photo.new(photo_params)
+    @photo = Photo.new(file: file)
     @photo.profile_id = current_user.profile.id
 
     if @photo.save
@@ -33,7 +33,7 @@ class PhotoController < ApplicationController
   private
 
   def photo_params
-    params.require(:photo).permit(:file file, :profile_id)
+    params.require(:photo).permit(:file, :profile_id)
   end
   
 end
