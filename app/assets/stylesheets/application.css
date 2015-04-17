@@ -125,6 +125,34 @@ ul.enlargement-links > li > a > img {
    overflow: hidden;
 }
 
+.object-avatar {
+  padding: 0;
+  width: 100px;
+  height: 100px;
+  display: block;
+  float: left;
+}
+
+.object-avatar > img {
+  display: block;
+}
+
+.object-list {
+  display: block;
+}
+
+.object-item {
+  background-color: #FFF;
+  display: block;
+  padding: 16px;
+
+  width: 80%;
+  margin-left: 10px;
+  margin-bottom: 24px;
+}
+
+
+
 ul {
   list-style: none;
 }

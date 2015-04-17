@@ -2,11 +2,11 @@
   <h1 class="header-logo">
         <% if logged_in? %>
     <a href="<%= profiles_path %>">
-      Adventure
+      Rough
     </a>
   <%else%>
     <a href="<%= root_path %>">
-      Adventure
+      Rough
     </a>
       <% end %>
   </h1>
@@ -16,7 +16,7 @@
     <ul class="group">
       <% if logged_in? %>
         <li>
-          <%= link_to "Home", profiles_path %>
+          <%= link_to "Home", status_messages_path %>
         </li>
 
         <li>
@@ -41,11 +41,6 @@
       <% else %>
         <li>
           <%= link_to "Sign Up", new_user_url %>
-        </li>
-        <li>
-          <a href="/auth/facebook">
-            Facebook Sign In
-          </a>
         </li>
       <% end %>
     </ul>

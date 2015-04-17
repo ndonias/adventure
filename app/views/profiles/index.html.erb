@@ -1,15 +1,6 @@
 <h1>Profiles</h1>
 <p>Check out your matches</p>
 
-<%= form_tag user_filter_path, method: :post, class: "search-bar" do %>
-    <span class="block-floated">Age Range: </span>
-    <%= text_field_tag :beg_age %>
-    <span class="block-floated">to</span>
-    <%= text_field_tag :end_age %>
-    <span class="block-floated">years old</span>
-    <%= submit_tag "Filter" %>
-<% end %>
-
 <ul class="profiles-list group">
 	<% @profiles.each do |profile| %>
 		<li>

@@ -11,14 +11,17 @@
 </div>
 
 <div class="content-2of7">
+  
   <div class="update-status-message">
+
+    <%= form_tag(status_messages_path, method: :post, id: "post-status-form", remote: true) do %>
+
+    <%= label_tag 'status_message[body]', 'Message' %>
     
-    <%= form_tag status_messages_path, method: :post, remote: true, id: "post-status-form"%>
+    <%= text_area_tag 'status_message[body]', nil, cols: 3, class: 'form-control', required: true %>
 
-      <textarea placeholder="Say hi to the world!" class="group" name="status_message[body]"></textarea>
-
-      <input type="submit" value="I want to scream and shout!">
-    </form>
+     <%= submit_tag "Send" %>
+    <% end %>
   </div>
 
   <%= render partial: "shared/suggested_users" %>

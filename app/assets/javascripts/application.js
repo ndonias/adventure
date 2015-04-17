@@ -16,6 +16,14 @@
 //= require jquery-fileupload
 //= require twitter/bootstrap
 //= require turbolinks
+//= require underscore
+//= require backbone
+//= require adventure
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree .
 
 $(document).ready(function() {
@@ -164,14 +172,6 @@ $(document).ready(function() {
   $( ".message" ).click(function(event) {
     event.preventDefault();
     displayComposeMessage();
-  });
-
-  $('.mini-question-container').on("click", '.toggle-edit', function(event) {
-    event.preventDefault();
-    var $trigger = $(this);
-    var $scope = $trigger.closest("div");
-    var $question = $scope.closest(".mini-question-container");
-    $question.addClass("edit-on");
   });
 
   $('.response-edit').on('ajax:success', function(e,d) {

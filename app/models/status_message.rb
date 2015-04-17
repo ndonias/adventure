@@ -11,7 +11,6 @@
 #
 
 class StatusMessage < ActiveRecord::Base
-  attr_accessible :body, :category, :user_id
   validates :body, presence: true
   validates :user, presence: true
 

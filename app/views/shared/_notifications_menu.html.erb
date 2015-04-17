@@ -12,7 +12,7 @@
       Check out <%= triggering_user.username %>'s profile!</a>
     <% else %>
       has sent you a
-      <a href="<%= conversation_user_messages_url(note.trigger_id)%>">
+      <a href="<%= conversation_user_messages_path(note.trigger_id)%>">
         message.
       </a>
     <% end %>

@@ -1,4 +1,6 @@
 class StatusMessagesController < ApplicationController
+  before_action :all_status, only: [:index, :create]
+
   def index
     @status_messages = StatusMessage
       .joins("INNER JOIN users ON status_messages.user_id = users.id
@@ -11,7 +13,7 @@ class StatusMessagesController < ApplicationController
       .order("status_messages.created_at DESC")
   end
   def create
-    @status_message = current_user.status_messages.new(params[:status_message])
+    @status_message = current_user.status_messages.new(params[:body])
 
     if current_user.save
       render :json => @status_message
@@ -20,5 +22,11 @@ class StatusMessagesController < ApplicationController
       redirect_to profiles_url
     end
 
+  end
+
+  private
+  
+  def all_status
+    @status_message = StatusMessage.all
   end
 end

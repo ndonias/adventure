@@ -14,7 +14,7 @@ class ProfilesController < ApplicationController
 
   def create
     @user = User.find(session[:user_id])
-    @user.build_profile(params.require(:profile).permit(:bio, :sex, :birthday, :city, :zip_code, photos_attributes:[:file, :profile_id]))
+    @user.build_profile(profile_params)
     if @user.profile.save
       redirect_to profile_path(@user.profile)
     else
@@ -44,4 +44,10 @@ class ProfilesController < ApplicationController
   def destroy
   end
 
+  private
+
+  def profile_params
+    params.require(:profile).permit(:hiking, :yoga, :dance, :weights, :running, :biking, :swimming, :rocks, :bio, :sex, :birthday, :city, :zip_code, photos_attributes:[:file, :profile_id])
+  end
+  
 end
